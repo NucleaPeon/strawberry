@@ -65,7 +65,10 @@ endif ()
 find_package(PkgConfig REQUIRED)
 find_package(Boost REQUIRED)
 find_package(Threads)
-find_package(Backtrace)
+find_package(Backtrace QUIET)
+if(Backtrace_FOUND)
+  set(HAVE_BACKTRACE ON)
+endif()
 find_package(GnuTLS)
 find_package(Protobuf REQUIRED)
 find_library(PROTOBUF_STATIC_LIBRARY libprotobuf.a libprotobuf)
@@ -108,7 +111,7 @@ find_package(Gettext)
 find_package(FFTW3)
 
 # QT
-set(QT_MIN_VERSION 5.5)
+set(QT_MIN_VERSION 5.6)
 set(QT_COMPONENTS Core Concurrent Widgets Network Sql)
 
 if(X11_FOUND)
@@ -328,8 +331,6 @@ optional_component(TRANSLATIONS ON "Translations"
   DEPENDS "Qt5LinguistTools" Qt5LinguistTools_FOUND
 )
 
-optional_component(TIDAL ON "Tidal support")
-optional_component(QOBUZ ON "Qobuz support")
 optional_component(SUBSONIC ON "Subsonic support")
 
 optional_component(MOODBAR ON "Moodbar"
